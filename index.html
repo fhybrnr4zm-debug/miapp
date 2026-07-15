@@ -10,10 +10,10 @@
 <header class="app-header">
 <div class="header-content">
 <h1>NBA Explorer</h1>
-<p class="subtitle">Explora los 30 equipos de la NBA</p>
+<p class="subtitle">Explora los 30 equipos de la NBA: historia, estadios y leyendas</p>
 </div>
 <div class="controls">
-<input type="text" id="search-input" placeholder="Buscar equipo o ciudad..." />
+<input type="text" id="search-input" placeholder="Buscar por equipo, ciudad o jugador..." />
 <div class="filters">
 <button class="filter-btn active" data-filter="all">Todos</button>
 <button class="filter-btn" data-filter="Este">Este</button>
@@ -23,6 +23,7 @@
 </header>
 
 <main>
+<div id="stats-bar" class="stats-bar"></div>
 <p id="results-count" class="results-count"></p>
 <div id="teams-grid" class="teams-grid"></div>
 <p id="no-results" class="no-results hidden">No se encontraron equipos.</p>
