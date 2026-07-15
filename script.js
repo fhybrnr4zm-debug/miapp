@@ -1,35 +1,40 @@
+const API_BASE = "https://www.thesportsdb.com/api/v1/json/3";
+const NBA_LEAGUE_ID = "4387";
+
 const teams = [
-  { name: "Celtics", city: "Boston, MA", conference: "Este", division: "Atlántico", arena: "TD Garden", capacity: 19156, founded: 1946, titles: 18, color: "#007A33", players: ["Bill Russell", "Larry Bird", "Paul Pierce"], blurb: "La franquicia con más campeonatos de la historia de la NBA, cuna de grandes dinastías en los años 60 y 2000." },
-  { name: "Nets", city: "Brooklyn, NY", conference: "Este", division: "Atlántico", arena: "Barclays Center", capacity: 17732, founded: 1976, titles: 0, color: "#000000", players: ["Jason Kidd", "Vince Carter", "Kevin Durant"], blurb: "Se mudó de Nueva Jersey a Brooklyn en 2012 y todavía busca su primer título de la NBA." },
-  { name: "Knicks", city: "Nueva York, NY", conference: "Este", division: "Atlántico", arena: "Madison Square Garden", capacity: 19812, founded: 1946, titles: 2, color: "#006BB6", players: ["Patrick Ewing", "Walt Frazier", "Willis Reed"], blurb: "Uno de los equipos más históricos y mediáticos de la liga, con sede en el Madison Square Garden." },
-  { name: "76ers", city: "Filadelfia, PA", conference: "Este", division: "Atlántico", arena: "Wells Fargo Center", capacity: 20478, founded: 1949, titles: 3, color: "#ED174C", players: ["Wilt Chamberlain", "Julius Erving", "Allen Iverson"], blurb: "Franquicia con raíces en Filadelfia desde los años 60, célebre por el 'Trust the Process'." },
-  { name: "Raptors", city: "Toronto, ON", conference: "Este", division: "Atlántico", arena: "Scotiabank Arena", capacity: 19800, founded: 1995, titles: 1, color: "#CE1141", players: ["Vince Carter", "Chris Bosh", "Kyle Lowry"], blurb: "Único equipo canadiense de la NBA; se coronó campeón en 2019." },
-  { name: "Bulls", city: "Chicago, IL", conference: "Este", division: "Central", arena: "United Center", capacity: 20917, founded: 1966, titles: 6, color: "#CE1141", players: ["Michael Jordan", "Scottie Pippen", "Dennis Rodman"], blurb: "Dominaron los años 90 con seis títulos gracias a Michael Jordan y Scottie Pippen." },
-  { name: "Cavaliers", city: "Cleveland, OH", conference: "Este", division: "Central", arena: "Rocket Mortgage FieldHouse", capacity: 19432, founded: 1970, titles: 1, color: "#6F263D", players: ["LeBron James", "Kyrie Irving", "Mark Price"], blurb: "Le dieron a Cleveland su primer título en 2016 tras remontar un 1-3 en las Finales." },
-  { name: "Pistons", city: "Detroit, MI", conference: "Este", division: "Central", arena: "Little Caesars Arena", capacity: 20332, founded: 1941, titles: 3, color: "#C8102E", players: ["Isiah Thomas", "Joe Dumars", "Ben Wallace"], blurb: "Conocidos como los 'Bad Boys' de finales de los 80 por su estilo físico y defensivo." },
-  { name: "Pacers", city: "Indianápolis, IN", conference: "Este", division: "Central", arena: "Gainbridge Fieldhouse", capacity: 17923, founded: 1967, titles: 0, color: "#FDBB30", players: ["Reggie Miller", "Rik Smits", "Paul George"], blurb: "Nunca han ganado un título de la NBA, aunque sí varios de la antigua ABA." },
-  { name: "Bucks", city: "Milwaukee, WI", conference: "Este", division: "Central", arena: "Fiserv Forum", capacity: 17341, founded: 1968, titles: 2, color: "#00471B", players: ["Kareem Abdul-Jabbar", "Giannis Antetokounmpo", "Sidney Moncrief"], blurb: "Campeones en 2021 liderados por Giannis Antetokounmpo." },
-  { name: "Hawks", city: "Atlanta, GA", conference: "Este", division: "Sudeste", arena: "State Farm Arena", capacity: 16600, founded: 1946, titles: 1, color: "#E03A3E", players: ["Dominique Wilkins", "Bob Pettit", "Trae Young"], blurb: "Fundados en 1946, pasaron por Tri-Cities, Milwaukee y St. Louis antes de asentarse en Atlanta." },
-  { name: "Hornets", city: "Charlotte, NC", conference: "Este", division: "Sudeste", arena: "Spectrum Center", capacity: 19077, founded: 1988, titles: 0, color: "#00788C", players: ["Larry Johnson", "Alonzo Mourning", "Kemba Walker"], blurb: "Franquicia relanzada en 2004 tras la mudanza del equipo original a Nueva Orleans." },
-  { name: "Heat", city: "Miami, FL", conference: "Este", division: "Sudeste", arena: "Kaseya Center", capacity: 19600, founded: 1988, titles: 3, color: "#98002E", players: ["Dwyane Wade", "Alonzo Mourning", "Tim Hardaway"], blurb: "Tres veces campeones, conocidos por su exigente cultura de trabajo y disciplina." },
-  { name: "Magic", city: "Orlando, FL", conference: "Este", division: "Sudeste", arena: "Kia Center", capacity: 18846, founded: 1989, titles: 0, color: "#0077C0", players: ["Shaquille O'Neal", "Penny Hardaway", "Dwight Howard"], blurb: "Han llegado a las Finales de la NBA en dos ocasiones sin conseguir el título." },
-  { name: "Wizards", city: "Washington, D.C.", conference: "Este", division: "Sudeste", arena: "Capital One Arena", capacity: 20356, founded: 1961, titles: 1, color: "#E31837", players: ["Wes Unseld", "Elvin Hayes", "John Wall"], blurb: "Se llamaron Bullets hasta 1997, cuando cambiaron su nombre a Wizards." },
-  { name: "Nuggets", city: "Denver, CO", conference: "Oeste", division: "Noroeste", arena: "Ball Arena", capacity: 19520, founded: 1967, titles: 1, color: "#FEC524", players: ["Alex English", "Dikembe Mutombo", "Nikola Jokić"], blurb: "Consiguieron su primer título en 2023 de la mano de Nikola Jokić." },
-  { name: "Timberwolves", city: "Minneapolis, MN", conference: "Oeste", division: "Noroeste", arena: "Target Center", capacity: 18978, founded: 1989, titles: 0, color: "#236192", players: ["Kevin Garnett", "Kevin Love", "Karl-Anthony Towns"], blurb: "Aún no han logrado llegar a unas Finales de la NBA." },
-  { name: "Thunder", city: "Oklahoma City, OK", conference: "Oeste", division: "Noroeste", arena: "Paycom Center", capacity: 18203, founded: 1967, titles: 1, color: "#007AC1", players: ["Gary Payton", "Kevin Durant", "Russell Westbrook"], blurb: "Antes fueron los Seattle SuperSonics, campeones en 1979." },
-  { name: "Trail Blazers", city: "Portland, OR", conference: "Oeste", division: "Noroeste", arena: "Moda Center", capacity: 19393, founded: 1970, titles: 1, color: "#E03A3E", players: ["Clyde Drexler", "Bill Walton", "Damian Lillard"], blurb: "Su único título llegó en 1977 con Bill Walton como estrella." },
-  { name: "Jazz", city: "Salt Lake City, UT", conference: "Oeste", division: "Noroeste", arena: "Delta Center", capacity: 18306, founded: 1974, titles: 0, color: "#F9A01B", players: ["John Stockton", "Karl Malone", "Pete Maravich"], blurb: "Se fundaron en Nueva Orleans en 1974 y se mudaron a Utah en 1979." },
-  { name: "Warriors", city: "San Francisco, CA", conference: "Oeste", division: "Pacífico", arena: "Chase Center", capacity: 18064, founded: 1946, titles: 7, color: "#1D428A", players: ["Stephen Curry", "Wilt Chamberlain", "Rick Barry"], blurb: "Dinastía reciente con cuatro títulos entre 2015 y 2022 gracias a Stephen Curry." },
-  { name: "Clippers", city: "Los Ángeles, CA", conference: "Oeste", division: "Pacífico", arena: "Intuit Dome", capacity: 18000, founded: 1970, titles: 0, color: "#C8102E", players: ["Elgin Baylor", "Chris Paul", "Kawhi Leonard"], blurb: "Todavía no han logrado llegar a unas Finales de la NBA." },
-  { name: "Lakers", city: "Los Ángeles, CA", conference: "Oeste", division: "Pacífico", arena: "Crypto.com Arena", capacity: 18997, founded: 1947, titles: 17, color: "#552583", players: ["Magic Johnson", "Kareem Abdul-Jabbar", "Kobe Bryant"], blurb: "Segunda franquicia con más títulos de la historia, símbolo de Hollywood." },
-  { name: "Suns", city: "Phoenix, AZ", conference: "Oeste", division: "Pacífico", arena: "Footprint Center", capacity: 17071, founded: 1968, titles: 0, color: "#E56020", players: ["Charles Barkley", "Steve Nash", "Devin Booker"], blurb: "Han llegado tres veces a las Finales de la NBA sin conseguir el título." },
-  { name: "Kings", city: "Sacramento, CA", conference: "Oeste", division: "Pacífico", arena: "Golden 1 Center", capacity: 17608, founded: 1945, titles: 1, color: "#5A2D81", players: ["Oscar Robertson", "Chris Webber", "DeMarcus Cousins"], blurb: "Ganaron su único título en 1951, cuando eran los Rochester Royals." },
-  { name: "Mavericks", city: "Dallas, TX", conference: "Oeste", division: "Suroeste", arena: "American Airlines Center", capacity: 19200, founded: 1980, titles: 1, color: "#00538C", players: ["Dirk Nowitzki", "Michael Finley", "Luka Dončić"], blurb: "Su único anillo llegó en 2011 liderados por Dirk Nowitzki." },
-  { name: "Rockets", city: "Houston, TX", conference: "Oeste", division: "Suroeste", arena: "Toyota Center", capacity: 18055, founded: 1967, titles: 2, color: "#CE1141", players: ["Hakeem Olajuwon", "Yao Ming", "James Harden"], blurb: "Campeones consecutivos en 1994 y 1995 con Hakeem Olajuwon." },
-  { name: "Grizzlies", city: "Memphis, TN", conference: "Oeste", division: "Suroeste", arena: "FedExForum", capacity: 17794, founded: 1995, titles: 0, color: "#5D76A9", players: ["Pau Gasol", "Mike Conley", "Zach Randolph"], blurb: "Se fundaron en Vancouver en 1995 y se mudaron a Memphis en 2001." },
-  { name: "Pelicans", city: "Nueva Orleans, LA", conference: "Oeste", division: "Suroeste", arena: "Smoothie King Center", capacity: 16867, founded: 1988, titles: 0, color: "#C8102E", players: ["Chris Paul", "Anthony Davis", "David West"], blurb: "Se llamaron Hornets hasta 2013, cuando adoptaron el nombre Pelicans." },
-  { name: "Spurs", city: "San Antonio, TX", conference: "Oeste", division: "Suroeste", arena: "Frost Bank Center", capacity: 18418, founded: 1967, titles: 5, color: "#C4CED4", players: ["Tim Duncan", "David Robinson", "Manu Ginóbili"], blurb: "Ganaron cinco títulos entre 1999 y 2014 con una cultura de continuidad ejemplar." }
+  { name: "Celtics", fullName: "Boston Celtics", city: "Boston, MA", conference: "Este", division: "Atlántico", arena: "TD Garden", capacity: 19156, founded: 1946, titles: 18, color: "#007A33", players: ["Bill Russell", "Larry Bird", "Paul Pierce"], blurb: "La franquicia con más campeonatos de la historia de la NBA, cuna de grandes dinastías en los años 60 y 2000." },
+  { name: "Nets", fullName: "Brooklyn Nets", city: "Brooklyn, NY", conference: "Este", division: "Atlántico", arena: "Barclays Center", capacity: 17732, founded: 1976, titles: 0, color: "#000000", players: ["Jason Kidd", "Vince Carter", "Kevin Durant"], blurb: "Se mudó de Nueva Jersey a Brooklyn en 2012 y todavía busca su primer título de la NBA." },
+  { name: "Knicks", fullName: "New York Knicks", city: "Nueva York, NY", conference: "Este", division: "Atlántico", arena: "Madison Square Garden", capacity: 19812, founded: 1946, titles: 2, color: "#006BB6", players: ["Patrick Ewing", "Walt Frazier", "Willis Reed"], blurb: "Uno de los equipos más históricos y mediáticos de la liga, con sede en el Madison Square Garden." },
+  { name: "76ers", fullName: "Philadelphia 76ers", city: "Filadelfia, PA", conference: "Este", division: "Atlántico", arena: "Wells Fargo Center", capacity: 20478, founded: 1949, titles: 3, color: "#ED174C", players: ["Wilt Chamberlain", "Julius Erving", "Allen Iverson"], blurb: "Franquicia con raíces en Filadelfia desde los años 60, célebre por el 'Trust the Process'." },
+  { name: "Raptors", fullName: "Toronto Raptors", city: "Toronto, ON", conference: "Este", division: "Atlántico", arena: "Scotiabank Arena", capacity: 19800, founded: 1995, titles: 1, color: "#CE1141", players: ["Vince Carter", "Chris Bosh", "Kyle Lowry"], blurb: "Único equipo canadiense de la NBA; se coronó campeón en 2019." },
+  { name: "Bulls", fullName: "Chicago Bulls", city: "Chicago, IL", conference: "Este", division: "Central", arena: "United Center", capacity: 20917, founded: 1966, titles: 6, color: "#CE1141", players: ["Michael Jordan", "Scottie Pippen", "Dennis Rodman"], blurb: "Dominaron los años 90 con seis títulos gracias a Michael Jordan y Scottie Pippen." },
+  { name: "Cavaliers", fullName: "Cleveland Cavaliers", city: "Cleveland, OH", conference: "Este", division: "Central", arena: "Rocket Mortgage FieldHouse", capacity: 19432, founded: 1970, titles: 1, color: "#6F263D", players: ["LeBron James", "Kyrie Irving", "Mark Price"], blurb: "Le dieron a Cleveland su primer título en 2016 tras remontar un 1-3 en las Finales." },
+  { name: "Pistons", fullName: "Detroit Pistons", city: "Detroit, MI", conference: "Este", division: "Central", arena: "Little Caesars Arena", capacity: 20332, founded: 1941, titles: 3, color: "#C8102E", players: ["Isiah Thomas", "Joe Dumars", "Ben Wallace"], blurb: "Conocidos como los 'Bad Boys' de finales de los 80 por su estilo físico y defensivo." },
+  { name: "Pacers", fullName: "Indiana Pacers", city: "Indianápolis, IN", conference: "Este", division: "Central", arena: "Gainbridge Fieldhouse", capacity: 17923, founded: 1967, titles: 0, color: "#FDBB30", players: ["Reggie Miller", "Rik Smits", "Paul George"], blurb: "Nunca han ganado un título de la NBA, aunque sí varios de la antigua ABA." },
+  { name: "Bucks", fullName: "Milwaukee Bucks", city: "Milwaukee, WI", conference: "Este", division: "Central", arena: "Fiserv Forum", capacity: 17341, founded: 1968, titles: 2, color: "#00471B", players: ["Kareem Abdul-Jabbar", "Giannis Antetokounmpo", "Sidney Moncrief"], blurb: "Campeones en 2021 liderados por Giannis Antetokounmpo." },
+  { name: "Hawks", fullName: "Atlanta Hawks", city: "Atlanta, GA", conference: "Este", division: "Sudeste", arena: "State Farm Arena", capacity: 16600, founded: 1946, titles: 1, color: "#E03A3E", players: ["Dominique Wilkins", "Bob Pettit", "Trae Young"], blurb: "Fundados en 1946, pasaron por Tri-Cities, Milwaukee y St. Louis antes de asentarse en Atlanta." },
+  { name: "Hornets", fullName: "Charlotte Hornets", city: "Charlotte, NC", conference: "Este", division: "Sudeste", arena: "Spectrum Center", capacity: 19077, founded: 1988, titles: 0, color: "#00788C", players: ["Larry Johnson", "Alonzo Mourning", "Kemba Walker"], blurb: "Franquicia relanzada en 2004 tras la mudanza del equipo original a Nueva Orleans." },
+  { name: "Heat", fullName: "Miami Heat", city: "Miami, FL", conference: "Este", division: "Sudeste", arena: "Kaseya Center", capacity: 19600, founded: 1988, titles: 3, color: "#98002E", players: ["Dwyane Wade", "Alonzo Mourning", "Tim Hardaway"], blurb: "Tres veces campeones, conocidos por su exigente cultura de trabajo y disciplina." },
+  { name: "Magic", fullName: "Orlando Magic", city: "Orlando, FL", conference: "Este", division: "Sudeste", arena: "Kia Center", capacity: 18846, founded: 1989, titles: 0, color: "#0077C0", players: ["Shaquille O'Neal", "Penny Hardaway", "Dwight Howard"], blurb: "Han llegado a las Finales de la NBA en dos ocasiones sin conseguir el título." },
+  { name: "Wizards", fullName: "Washington Wizards", city: "Washington, D.C.", conference: "Este", division: "Sudeste", arena: "Capital One Arena", capacity: 20356, founded: 1961, titles: 1, color: "#E31837", players: ["Wes Unseld", "Elvin Hayes", "John Wall"], blurb: "Se llamaron Bullets hasta 1997, cuando cambiaron su nombre a Wizards." },
+  { name: "Nuggets", fullName: "Denver Nuggets", city: "Denver, CO", conference: "Oeste", division: "Noroeste", arena: "Ball Arena", capacity: 19520, founded: 1967, titles: 1, color: "#FEC524", players: ["Alex English", "Dikembe Mutombo", "Nikola Jokić"], blurb: "Consiguieron su primer título en 2023 de la mano de Nikola Jokić." },
+  { name: "Timberwolves", fullName: "Minnesota Timberwolves", city: "Minneapolis, MN", conference: "Oeste", division: "Noroeste", arena: "Target Center", capacity: 18978, founded: 1989, titles: 0, color: "#236192", players: ["Kevin Garnett", "Kevin Love", "Karl-Anthony Towns"], blurb: "Aún no han logrado llegar a unas Finales de la NBA." },
+  { name: "Thunder", fullName: "Oklahoma City Thunder", city: "Oklahoma City, OK", conference: "Oeste", division: "Noroeste", arena: "Paycom Center", capacity: 18203, founded: 1967, titles: 1, color: "#007AC1", players: ["Gary Payton", "Kevin Durant", "Russell Westbrook"], blurb: "Antes fueron los Seattle SuperSonics, campeones en 1979." },
+  { name: "Trail Blazers", fullName: "Portland Trail Blazers", city: "Portland, OR", conference: "Oeste", division: "Noroeste", arena: "Moda Center", capacity: 19393, founded: 1970, titles: 1, color: "#E03A3E", players: ["Clyde Drexler", "Bill Walton", "Damian Lillard"], blurb: "Su único título llegó en 1977 con Bill Walton como estrella." },
+  { name: "Jazz", fullName: "Utah Jazz", city: "Salt Lake City, UT", conference: "Oeste", division: "Noroeste", arena: "Delta Center", capacity: 18306, founded: 1974, titles: 0, color: "#F9A01B", players: ["John Stockton", "Karl Malone", "Pete Maravich"], blurb: "Se fundaron en Nueva Orleans en 1974 y se mudaron a Utah en 1979." },
+  { name: "Warriors", fullName: "Golden State Warriors", city: "San Francisco, CA", conference: "Oeste", division: "Pacífico", arena: "Chase Center", capacity: 18064, founded: 1946, titles: 7, color: "#1D428A", players: ["Stephen Curry", "Wilt Chamberlain", "Rick Barry"], blurb: "Dinastía reciente con cuatro títulos entre 2015 y 2022 gracias a Stephen Curry." },
+  { name: "Clippers", fullName: "LA Clippers", city: "Los Ángeles, CA", conference: "Oeste", division: "Pacífico", arena: "Intuit Dome", capacity: 18000, founded: 1970, titles: 0, color: "#C8102E", players: ["Elgin Baylor", "Chris Paul", "Kawhi Leonard"], blurb: "Todavía no han logrado llegar a unas Finales de la NBA." },
+  { name: "Lakers", fullName: "Los Angeles Lakers", city: "Los Ángeles, CA", conference: "Oeste", division: "Pacífico", arena: "Crypto.com Arena", capacity: 18997, founded: 1947, titles: 17, color: "#552583", players: ["Magic Johnson", "Kareem Abdul-Jabbar", "Kobe Bryant"], blurb: "Segunda franquicia con más títulos de la historia, símbolo de Hollywood." },
+  { name: "Suns", fullName: "Phoenix Suns", city: "Phoenix, AZ", conference: "Oeste", division: "Pacífico", arena: "Footprint Center", capacity: 17071, founded: 1968, titles: 0, color: "#E56020", players: ["Charles Barkley", "Steve Nash", "Devin Booker"], blurb: "Han llegado tres veces a las Finales de la NBA sin conseguir el título." },
+  { name: "Kings", fullName: "Sacramento Kings", city: "Sacramento, CA", conference: "Oeste", division: "Pacífico", arena: "Golden 1 Center", capacity: 17608, founded: 1945, titles: 1, color: "#5A2D81", players: ["Oscar Robertson", "Chris Webber", "DeMarcus Cousins"], blurb: "Ganaron su único título en 1951, cuando eran los Rochester Royals." },
+  { name: "Mavericks", fullName: "Dallas Mavericks", city: "Dallas, TX", conference: "Oeste", division: "Suroeste", arena: "American Airlines Center", capacity: 19200, founded: 1980, titles: 1, color: "#00538C", players: ["Dirk Nowitzki", "Michael Finley", "Luka Dončić"], blurb: "Su único anillo llegó en 2011 liderados por Dirk Nowitzki." },
+  { name: "Rockets", fullName: "Houston Rockets", city: "Houston, TX", conference: "Oeste", division: "Suroeste", arena: "Toyota Center", capacity: 18055, founded: 1967, titles: 2, color: "#CE1141", players: ["Hakeem Olajuwon", "Yao Ming", "James Harden"], blurb: "Campeones consecutivos en 1994 y 1995 con Hakeem Olajuwon." },
+  { name: "Grizzlies", fullName: "Memphis Grizzlies", city: "Memphis, TN", conference: "Oeste", division: "Suroeste", arena: "FedExForum", capacity: 17794, founded: 1995, titles: 0, color: "#5D76A9", players: ["Pau Gasol", "Mike Conley", "Zach Randolph"], blurb: "Se fundaron en Vancouver en 1995 y se mudaron a Memphis en 2001." },
+  { name: "Pelicans", fullName: "New Orleans Pelicans", city: "Nueva Orleans, LA", conference: "Oeste", division: "Suroeste", arena: "Smoothie King Center", capacity: 16867, founded: 1988, titles: 0, color: "#C8102E", players: ["Chris Paul", "Anthony Davis", "David West"], blurb: "Se llamaron Hornets hasta 2013, cuando adoptaron el nombre Pelicans." },
+  { name: "Spurs", fullName: "San Antonio Spurs", city: "San Antonio, TX", conference: "Oeste", division: "Suroeste", arena: "Frost Bank Center", capacity: 18418, founded: 1967, titles: 5, color: "#C4CED4", players: ["Tim Duncan", "David Robinson", "Manu Ginóbili"], blurb: "Ganaron cinco títulos entre 1999 y 2014 con una cultura de continuidad ejemplar." }
 ];
+
+const teamLogoCache = {};
 
 const grid = document.getElementById('teams-grid');
 const searchInput = document.getElementById('search-input');
@@ -40,6 +45,7 @@ const modal = document.getElementById('team-modal');
 const modalBody = document.getElementById('modal-body');
 const modalClose = document.getElementById('modal-close');
 const statsBar = document.getElementById('stats-bar');
+const gamesList = document.getElementById('recent-games-list');
 
 let currentFilter = 'all';
 let currentSearch = '';
@@ -104,6 +110,14 @@ function renderTeams() {
     card.className = 'team-card';
     card.style.setProperty('--team-color', team.color);
 
+    const logoImg = document.createElement('img');
+    logoImg.className = 'team-logo';
+    logoImg.alt = team.name;
+    logoImg.src = teamLogoCache[team.fullName] || '';
+    if (!teamLogoCache[team.fullName]) {
+      logoImg.classList.add('hidden');
+    }
+
     const title = document.createElement('h3');
     title.textContent = team.name;
 
@@ -127,6 +141,7 @@ function renderTeams() {
     meta.appendChild(conf);
     meta.appendChild(titlesSpan);
 
+    card.appendChild(logoImg);
     card.appendChild(title);
     card.appendChild(cityEl);
     card.appendChild(blurb);
@@ -144,6 +159,15 @@ function openModal(team) {
   modalBody.innerHTML = '';
   modal.querySelector('.modal-content').style.setProperty('--team-color', team.color);
 
+  const logoImg = document.createElement('img');
+  logoImg.className = 'modal-logo';
+  logoImg.alt = team.name;
+  if (teamLogoCache[team.fullName]) {
+    logoImg.src = teamLogoCache[team.fullName];
+  } else {
+    logoImg.classList.add('hidden');
+  }
+
   const h2 = document.createElement('h2');
   h2.textContent = team.name;
 
@@ -155,6 +179,7 @@ function openModal(team) {
   blurbP.className = 'modal-blurb';
   blurbP.textContent = team.blurb;
 
+  modalBody.appendChild(logoImg);
   modalBody.appendChild(h2);
   modalBody.appendChild(cityP);
   modalBody.appendChild(blurbP);
@@ -228,5 +253,89 @@ filterBtns.forEach(function (btn) {
   });
 });
 
+async function loadTeamLogos() {
+  const requests = teams.map(function (team) {
+    const url = API_BASE + '/searchteams.php?t=' + encodeURIComponent(team.fullName);
+    return fetch(url)
+      .then(function (res) { return res.json(); })
+      .then(function (data) {
+        if (data && data.teams && data.teams[0] && data.teams[0].strBadge) {
+          teamLogoCache[team.fullName] = data.teams[0].strBadge;
+        }
+      })
+      .catch(function () {});
+  });
+
+  await Promise.allSettled(requests);
+  renderTeams();
+}
+
+async function loadRecentGames() {
+  if (!gamesList) return;
+  gamesList.innerHTML = '<p class="games-status">Cargando resultados desde la API de TheSportsDB...</p>';
+
+  try {
+    const res = await fetch(API_BASE + '/eventspastleague.php?id=' + NBA_LEAGUE_ID);
+    const data = await res.json();
+    const events = (data && data.events) ? data.events.slice(0, 6) : [];
+
+    if (events.length === 0) {
+      gamesList.innerHTML = '<p class="games-status">No hay resultados recientes disponibles en este momento.</p>';
+      return;
+    }
+
+    gamesList.innerHTML = '';
+    events.forEach(function (ev) {
+      const card = document.createElement('div');
+      card.className = 'game-card';
+
+      const teamsRow = document.createElement('div');
+      teamsRow.className = 'game-teams';
+
+      const homeSide = document.createElement('div');
+      homeSide.className = 'game-side';
+      const homeBadge = document.createElement('img');
+      homeBadge.className = 'game-badge';
+      homeBadge.src = ev.strHomeTeamBadge || '';
+      homeBadge.alt = ev.strHomeTeam || '';
+      const homeName = document.createElement('span');
+      homeName.textContent = ev.strHomeTeam || '';
+      homeSide.appendChild(homeBadge);
+      homeSide.appendChild(homeName);
+
+      const score = document.createElement('div');
+      score.className = 'game-score';
+      score.textContent = (ev.intHomeScore != null ? ev.intHomeScore : '-') + ' : ' + (ev.intAwayScore != null ? ev.intAwayScore : '-');
+
+      const awaySide = document.createElement('div');
+      awaySide.className = 'game-side';
+      const awayBadge = document.createElement('img');
+      awayBadge.className = 'game-badge';
+      awayBadge.src = ev.strAwayTeamBadge || '';
+      awayBadge.alt = ev.strAwayTeam || '';
+      const awayName = document.createElement('span');
+      awayName.textContent = ev.strAwayTeam || '';
+      awaySide.appendChild(awayBadge);
+      awaySide.appendChild(awayName);
+
+      teamsRow.appendChild(homeSide);
+      teamsRow.appendChild(score);
+      teamsRow.appendChild(awaySide);
+
+      const dateEl = document.createElement('div');
+      dateEl.className = 'game-date';
+      dateEl.textContent = ev.dateEvent || '';
+
+      card.appendChild(teamsRow);
+      card.appendChild(dateEl);
+      gamesList.appendChild(card);
+    });
+  } catch (err) {
+    gamesList.innerHTML = '<p class="games-status">No se pudo conectar con la API en este momento.</p>';
+  }
+}
+
 renderStats();
 renderTeams();
+loadTeamLogos();
+loadRecentGames();
