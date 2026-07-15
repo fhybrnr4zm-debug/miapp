@@ -91,6 +91,34 @@ main {
   padding: 24px;
 }
 
+.stats-bar {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 14px;
+  margin-bottom: 26px;
+}
+
+.stat-card {
+  background: rgba(255,255,255,0.05);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 12px;
+  padding: 14px;
+  text-align: center;
+}
+
+.stat-value {
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: #ff8c32;
+  margin-bottom: 4px;
+  word-break: break-word;
+}
+
+.stat-label {
+  font-size: 0.75rem;
+  color: #8b93a7;
+}
+
 .results-count {
   color: #8b93a7;
   font-size: 0.85rem;
@@ -99,7 +127,7 @@ main {
 
 .teams-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
   gap: 18px;
 }
 
@@ -111,6 +139,8 @@ main {
   cursor: pointer;
   transition: transform 0.15s ease, box-shadow 0.15s ease, border-color 0.15s ease;
   border-top: 4px solid var(--team-color, #ff8c32);
+  display: flex;
+  flex-direction: column;
 }
 
 .team-card:hover {
@@ -128,6 +158,14 @@ main {
   color: #8b93a7;
   font-size: 0.85rem;
   margin-bottom: 10px;
+}
+
+.team-card .team-blurb {
+  font-size: 0.8rem;
+  color: #cfd6e4;
+  line-height: 1.4;
+  margin-bottom: 12px;
+  flex-grow: 1;
 }
 
 .team-card .team-meta {
@@ -164,6 +202,8 @@ main {
   padding: 28px;
   max-width: 480px;
   width: 100%;
+  max-height: 85vh;
+  overflow-y: auto;
   position: relative;
   border-top: 6px solid var(--team-color, #ff8c32);
 }
@@ -190,6 +230,13 @@ main {
 
 #modal-body .modal-city {
   color: #8b93a7;
+  margin-bottom: 12px;
+}
+
+#modal-body .modal-blurb {
+  font-size: 0.88rem;
+  color: #cfd6e4;
+  line-height: 1.5;
   margin-bottom: 18px;
 }
 
@@ -203,6 +250,30 @@ main {
 
 #modal-body .detail-row span:first-child {
   color: #8b93a7;
+}
+
+.players-title {
+  margin-top: 18px;
+  margin-bottom: 10px;
+  font-size: 0.85rem;
+  color: #8b93a7;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.players-wrap {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.player-chip {
+  background: rgba(255,140,50,0.12);
+  border: 1px solid rgba(255,140,50,0.35);
+  color: #ffb877;
+  padding: 6px 12px;
+  border-radius: 999px;
+  font-size: 0.8rem;
 }
 
 .app-footer {
