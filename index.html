@@ -1,1 +1,44 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>NBA Explorer</title>
+<link rel="stylesheet" href="style.css" />
+</head>
+<body>
+<header class="app-header">
+<div class="header-content">
+<h1>NBA Explorer</h1>
+<p class="subtitle">Explora los 30 equipos de la NBA</p>
+</div>
+<div class="controls">
+<input type="text" id="search-input" placeholder="Buscar equipo o ciudad..." />
+<div class="filters">
+<button class="filter-btn active" data-filter="all">Todos</button>
+<button class="filter-btn" data-filter="Este">Este</button>
+<button class="filter-btn" data-filter="Oeste">Oeste</button>
+</div>
+</div>
+</header>
 
+<main>
+<p id="results-count" class="results-count"></p>
+<div id="teams-grid" class="teams-grid"></div>
+<p id="no-results" class="no-results hidden">No se encontraron equipos.</p>
+</main>
+
+<div id="team-modal" class="modal hidden">
+<div class="modal-content">
+<button id="modal-close" class="modal-close">&times;</button>
+<div id="modal-body"></div>
+</div>
+</div>
+
+<footer class="app-footer">
+<p>Hecho para los fans de la NBA</p>
+</footer>
+
+<script src="script.js"></script>
+</body>
+</html>
