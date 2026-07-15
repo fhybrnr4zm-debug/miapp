@@ -95,7 +95,7 @@ main {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
   gap: 14px;
-  margin-bottom: 26px;
+  margin-bottom: 30px;
 }
 
 .stat-card {
@@ -117,6 +117,81 @@ main {
 .stat-label {
   font-size: 0.75rem;
   color: #8b93a7;
+}
+
+.section-title {
+  font-size: 1.3rem;
+  margin-bottom: 4px;
+  color: #f2f2f2;
+}
+
+.section-source {
+  font-size: 0.78rem;
+  color: #8b93a7;
+  margin-bottom: 16px;
+}
+
+.recent-games-section {
+  margin-bottom: 36px;
+  padding-bottom: 24px;
+  border-bottom: 1px solid rgba(255,255,255,0.08);
+}
+
+.games-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 14px;
+}
+
+.games-status {
+  color: #8b93a7;
+  font-size: 0.85rem;
+  grid-column: 1 / -1;
+}
+
+.game-card {
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 12px;
+  padding: 14px;
+}
+
+.game-teams {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.game-side {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  flex: 1;
+  font-size: 0.75rem;
+  text-align: center;
+  color: #cfd6e4;
+}
+
+.game-badge {
+  width: 36px;
+  height: 36px;
+  object-fit: contain;
+}
+
+.game-score {
+  font-weight: 700;
+  font-size: 1.05rem;
+  color: #ff8c32;
+  padding: 0 8px;
+}
+
+.game-date {
+  text-align: center;
+  font-size: 0.72rem;
+  color: #6c7488;
+  margin-top: 10px;
 }
 
 .results-count {
@@ -147,6 +222,13 @@ main {
   transform: translateY(-4px);
   box-shadow: 0 10px 25px rgba(0,0,0,0.35);
   border-color: rgba(255,255,255,0.2);
+}
+
+.team-logo {
+  width: 44px;
+  height: 44px;
+  object-fit: contain;
+  margin-bottom: 10px;
 }
 
 .team-card h3 {
@@ -222,6 +304,13 @@ main {
 
 .modal-close:hover {
   color: #ff8c32;
+}
+
+.modal-logo {
+  width: 64px;
+  height: 64px;
+  object-fit: contain;
+  margin-bottom: 12px;
 }
 
 #modal-body h2 {
