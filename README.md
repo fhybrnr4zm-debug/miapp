@@ -16,4 +16,4 @@ Aplicación web sencilla para explorar los 30 equipos de la NBA.
 
 ## Cómo usarla
 
-Abre `index.html` en tu navegador, o publica el repositorio con GitHub Pages.
+Abre `index.html` en tu navegador, o publica el repositorio con GitHub Pages. 
